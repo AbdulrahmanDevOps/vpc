@@ -13,8 +13,11 @@ jobs:
     name: Terraform
     runs-on: ubuntu-latest
 
+    environment:
+      name: production
+
     permissions:
-      id-token: write 
+      id-token: write
       contents: read
       
     steps:
@@ -47,6 +50,6 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-      # Terraform Apply (Auto apply on push to main)
+      # Terraform Apply
       - name: Terraform Apply
         run: terraform apply -auto-approve
