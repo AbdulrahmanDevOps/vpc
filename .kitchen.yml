@@ -1,0 +1,15 @@
+---
+driver:
+  name: terraform
+
+provisioner:
+  name: terraform
+
+verifier:
+  name: terraform
+
+platforms:
+  - name: aws
+
+suites:
+  - name: default
