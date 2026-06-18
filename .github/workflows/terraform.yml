@@ -1,16 +1,35 @@
-name: Terraform Auto Deploy (OIDC)
+name: Terraform Deploy
 
 on:
   push:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
-  terraform:
-    name: Terraform
+  plan:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform init
+      - run: terraform validate
+      - run: terraform plan
+
+  apply:
+    needs: plan
+
     runs-on: ubuntu-latest
 
     environment:
@@ -19,37 +38,16 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      
-    steps:
-      # Checkout repository
-      - name: Checkout code
-        uses: actions/checkout@v4
 
-      # Configure AWS credentials using OIDC
-      - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v2
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      # Install Terraform
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.14.0
+      - uses: hashicorp/setup-terraform@v3
 
-      # Terraform Init
-      - name: Terraform Init
-        run: terraform init
-
-      # Terraform Validate
-      - name: Terraform Validate
-        run: terraform validate
-
-      # Terraform Plan
-      - name: Terraform Plan
-        run: terraform plan
-
-      # Terraform Apply
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - run: terraform init
+      - run: terraform apply -auto-approve
