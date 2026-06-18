@@ -88,16 +88,7 @@ arn:aws:iam::637423214760:role/gitlab-oidc-role
 
 ---
 
-## Step 4: Create GitLab CI/CD Pipeline
-
-1. Open your GitLab project
-2. Go to **CI/CD**
-3. Click **Create .gitlab-ci.yml**
-4. Paste the following code
-
----
-
-## Step 5: Store Role ARN in GitLab CI/CD Variables
+## Step 4: Store Role ARN in GitLab CI/CD Variables
 
 1. Open your GitLab Project
 
@@ -144,6 +135,16 @@ arn:aws:iam::637423214760:role/gitlab-oidc-role
    ```
    Add variable
    ```
+
+---
+
+
+## Step 5: Create GitLab CI/CD Pipeline
+
+1. Open your GitLab project
+2. Go to **CI/CD**
+3. Click **Create .gitlab-ci.yml**
+4. Paste the following code
 
 ---
 
