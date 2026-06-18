@@ -97,7 +97,57 @@ arn:aws:iam::637423214760:role/gitlab-oidc-role
 
 ---
 
-## Step 5: `.gitlab-ci.yml` File
+## Step 5: Store Role ARN in GitLab CI/CD Variables
+
+1. Open your GitLab Project
+
+2. Go to:
+
+   ```
+   Settings → CI/CD
+   ```
+
+3. Expand:
+
+   ```
+   Variables
+   ```
+
+4. Click:
+
+   ```
+   Add variable
+   ```
+
+5. Add:
+
+   **Key**
+
+   ```
+   ROLE_ARN
+   ```
+
+   **Value**
+
+   ```
+   arn:aws:iam::637423214760:role/gitlab-oidc-role
+   ```
+
+   **Type**
+
+   ```
+   Variable
+   ```
+
+6. Click:
+
+   ```
+   Add variable
+   ```
+
+---
+
+## Step 6: `.gitlab-ci.yml` File
 
 ```yaml
 image:
@@ -164,56 +214,6 @@ terraform_apply:
 ### Replace
 
 * `AWS_REGION` → Your AWS Region
-
----
-
-## Step 6: Store Role ARN in GitLab CI/CD Variables
-
-1. Open your GitLab Project
-
-2. Go to:
-
-   ```
-   Settings → CI/CD
-   ```
-
-3. Expand:
-
-   ```
-   Variables
-   ```
-
-4. Click:
-
-   ```
-   Add variable
-   ```
-
-5. Add:
-
-   **Key**
-
-   ```
-   ROLE_ARN
-   ```
-
-   **Value**
-
-   ```
-   arn:aws:iam::637423214760:role/gitlab-oidc-role
-   ```
-
-   **Type**
-
-   ```
-   Variable
-   ```
-
-6. Click:
-
-   ```
-   Add variable
-   ```
 
 ---
 

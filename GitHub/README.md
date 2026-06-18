@@ -9,7 +9,7 @@
 3. Example name:
 
    ```
-   vpc-iac
+   terraform-iac
    ```
 
 4. Initialize with a README file
@@ -138,7 +138,34 @@ Save the environment.
 
 ---
 
-## Step 5: Create GitHub Actions Workflow
+## Step 5: Set AWS Role ARN as Secret in GitHub
+
+1. Open GitHub Repository
+2. Click **Settings**
+3. Secrets and variables → **Actions**
+4. Click **New repository secret**
+
+Add:
+
+**Name**
+
+```text
+AWS_ROLE_ARN
+```
+
+**Secret**
+
+```text
+arn:aws:iam::637423214760:role/github-oidc-role
+```
+
+5. Click **Add secret**
+
+Now your AWS Role ARN is securely stored in GitHub Actions secrets.
+
+---
+
+## Step 6: Create GitHub Actions Workflow
 
 Create:
 
@@ -213,33 +240,6 @@ aws-region: us-east-1
 ```
 
 with your AWS region.
-
----
-
-## Step 6: Set AWS Role ARN as Secret in GitHub
-
-1. Open GitHub Repository
-2. Click **Settings**
-3. Secrets and variables → **Actions**
-4. Click **New repository secret**
-
-Add:
-
-**Name**
-
-```text
-AWS_ROLE_ARN
-```
-
-**Secret**
-
-```text
-arn:aws:iam::637423214760:role/github-oidc-role
-```
-
-5. Click **Add secret**
-
-Now your AWS Role ARN is securely stored in GitHub Actions secrets.
 
 ---
 
