@@ -5,8 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  plan:
+  terraform:
     runs-on: ubuntu-latest
 
     permissions:
@@ -22,32 +25,17 @@ jobs:
           aws-region: us-east-1
 
       - uses: hashicorp/setup-terraform@v3
-
-      - run: terraform init
-      - run: terraform validate
-      - run: terraform plan
-
-  apply:
-    needs: plan
-
-    runs-on: ubuntu-latest
-
-    environment:
-      name: production
-
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: us-east-1
+          terraform_version: 1.14.0
 
-      - uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
 
-      - run: terraform init
-      - run: terraform apply -auto-approve
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      # - name: Terraform Apply
+      #   run: terraform apply --auto-approve
